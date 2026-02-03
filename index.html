@@ -5,42 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basmala, be my Valentine?</title>
     <style>
-        body {
-            text-align: center;
-            font-family: 'Arial', sans-serif;
-            background-color: #ffe6eb;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        #container { position: relative; width: 100%; }
-        .main-media { width: 250px; border-radius: 15px; margin-bottom: 20px; } /* حجم أكبر للفيديوهات */
-        h1 { color: #d6336c; font-size: 24px; margin: 10px; }
-        .buttons { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
-        button {
-            padding: 15px 25px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        #yesBtn { background-color: #ff4d6d; color: white; z-index: 100; }
-        #noBtn { background-color: #888; color: white; }
+        body { text-align: center; font-family: 'Arial', sans-serif; background-color: #ffe6eb; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        .main-media { width: 280px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        h1 { color: #d6336c; font-size: 22px; margin: 10px; padding: 0 10px; }
+        .buttons { display: flex; justify-content: center; align-items: center; gap: 15px; position: relative; width: 100%; height: 200px; }
+        button { padding: 15px 25px; font-size: 18px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s ease-in-out; }
+        #yesBtn { background-color: #ff4d6d; color: white; z-index: 1000; position: relative; }
+        #noBtn { background-color: #888; color: white; position: relative; }
     </style>
 </head>
 <body>
 
-    <div id="container">
-        <video id="mainVideo" class="main-media" src="https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4" autoplay loop muted playsinline></video>
+    <div id="main-content">
+        <video id="myVideo" class="main-media" autoplay loop muted playsinline>
+            <source src="https://www.dropbox.com/scl/fi/c35hz13kmj8z0m729cmac/IMG_1633.mp4?rlkey=7d51pe83a3o9c8ux6tgat8g1i&st=npzgi7yg&raw=1" type="video/mp4">
+        </video>
         
         <h1 id="question">Basmala, would you be my Valentine? ❤️</h1>
 
-        <div class="buttons" id="buttonGroup">
+        <div class="buttons">
             <button id="yesBtn" onclick="celebrate()">Yes ❤️</button>
             <button id="noBtn" onclick="handleNo()">No</button>
         </div>
@@ -48,57 +31,50 @@
 
     <script>
         let noCount = 0;
-        const yesBtn = document.getElementById("yesBtn");
-        const noBtn = document.getElementById("noBtn");
-        const questionText = document.getElementById("question");
-        const mainVideo = document.getElementById("mainVideo"); // الآن نتعامل مع عنصر الفيديو
-
         const noMessages = [
-            "Are you sure?",
-            "Are you sure you're sure?",
-            "You better say yes!",
-            "Babee please...",
-            "Please babe 🥺",
-            "Don't do this to me...",
-            "I'm gonna cry 😭",
-            "Okay, last chance..."
+            "Are you sure?", 
+            "Are you sure you're sure?", 
+            "You better say yes!", 
+            "Babee please...", 
+            "Please babe 🥺", 
+            "Don't do this to me...", 
+            "I'm gonna cry 😭", 
+            "Just say YES! 😂"
         ];
 
         function handleNo() {
-            // تغيير نص زر الـ No
+            const noBtn = document.getElementById("noBtn");
+            const yesBtn = document.getElementById("yesBtn");
+            
             if (noCount < noMessages.length) {
                 noBtn.innerText = noMessages[noCount];
             } else {
-                noBtn.innerText = "You have no choice! 😂"; // بعد 8 ضغطات
+                noBtn.innerText = "No way out! 😉";
             }
 
-            // تكبير زر الـ Yes
-            let currentSize = 1 + (noCount * 0.4); // يزيد الحجم 40% في كل ضغطة
-            yesBtn.style.transform = `scale(${currentSize})`;
+            // تكبير زر الـ Yes بشكل كبير
+            let scale = 1 + (noCount * 0.9); 
+            yesBtn.style.transform = `scale(${scale})`;
             
+            // تحريك زر الـ No للأسفل
+            let moveY = noCount * 30;
+            noBtn.style.transform = `translateY(${moveY}px)`;
+
             noCount++;
         }
 
         function celebrate() {
-            // تغيير المحتوى بالكامل عند الموافقة
-            document.body.innerHTML = `
-                <div style="text-align:center;">
-                    <video src="https://assets.mixkit.co/videos/preview/mixkit-fireworks-illuminating-the-night-sky-4166-large.mp4" autoplay loop muted playsinline class="main-media" style="width:300px;"></video>
-                    <h1 style="color: #d6336c; font-size: 35px;">Best decision ever! ❤️</h1>
-                    <h2 style="color: #ff4d6d;">I love you, Basmala! ✨ 🎉</h2>
-                </div>
+            const content = document.getElementById("main-content");
+            // الفيديو الثاني: الاحتفال
+            content.innerHTML = `
+                <video class="main-media" autoplay loop muted playsinline style="width: 320px;">
+                    <source src="https://www.dropbox.com/scl/fi/fwhkbno1goka7vseha8xj/36491646600569934.mp4?rlkey=hyr8gwv0zorrxjfr0ze7hicp0&st=9higyrp8&raw=1" type="video/mp4">
+                </video>
+                <h1 style="font-size: 35px; color: #d6336c;">YAAAAAY! ❤️</h1>
+                <h2 style="color: #ff4d6d;">Best decision ever, Basmala! ✨</h2>
             `;
-            
-            // إضافة تأثير القصاصات الملونة (اختياري)
-            confettiEffect();
-        }
-
-        function confettiEffect() {
-            // يمكنك إضافة مكتبة قصاصات هنا للحصول على تأثيرات أفضل
-            // في الوقت الحالي، سنغير لون الخلفية فقط
-            document.body.style.backgroundColor = "#fff0f3"; 
+            document.body.style.backgroundColor = "#fff0f3";
         }
     </script>
-
 </body>
 </html>
