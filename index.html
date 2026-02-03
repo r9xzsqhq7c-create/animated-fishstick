@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basmala, be my Valentine?</title>
+<style>
+  body { text-align: center; font-family: 'Arial', sans-serif; background: #ffe6eb; margin: 0; padding: 20px; overflow-x: hidden; }
+  h1 { color: #d6336c; font-size: 24px; }
+  .gallery img { width: 150px; border-radius: 15px; margin: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+  button { padding: 15px 30px; font-size: 18px; border: none; border-radius: 10px; cursor: pointer; margin: 10px; transition: 0.3s; }
+  #yes { background: #ff4d6d; color: white; }
+  #no { background: gray; color: white; position: absolute; z-index: 999; }
+  .success-msg { color: #d6336c; animation: heartBeat 1.2s infinite; }
+  @keyframes heartBeat { 0% {transform: scale(1);} 50% {transform: scale(1.1);} 100% {transform: scale(1);} }
+</style>
+</head>
+<body>
+
+<h1>Basmala, would you be my Valentine? ❤️</h1>
+
+<div class="gallery">
+  <img src="https://daysoftheyear.com/wp-content/uploads/valentine-s-day.jpg" alt="Love">
+  <img src="https://images.unsplash.com/photo-1518562180175-34a163b1a9a6?q=80&w=1000&auto=format&fit=crop" alt="Heart">
+</div>
+
+<div style="height: 100px; position: relative;">
+  <button id="yes" onclick="yesAnswer()">Yes ❤️</button>
+  <button id="no" onmouseover="moveButton()" onclick="moveButton()">No</button>
+</div>
+
+<script>
+function yesAnswer() {
+  document.body.innerHTML = `
+    <h1 class="success-msg">Best decision ever ❤️</h1>
+    <h2 style="color: #ff4d6d;">Can't wait for our memories together, Basmala!</h2>
+    <div style="font-size: 100px;">🌹</div>
+  `;
+}
+
+function moveButton() {
+  const button = document.getElementById("no");
+  // حساب المساحة المتاحة في الشاشة للتليفون
+  const x = Math.random() * (window.innerWidth - button.offsetWidth);
+  const y = Math.random() * (window.innerHeight - button.offsetHeight);
+  button.style.left = x + "px";
+  button.style.top = y + "px";
+}
+</script>
+</body>
+</html>
