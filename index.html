@@ -1,49 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basmala, be my Valentine?</title>
-<style>
-  body { text-align: center; font-family: 'Arial', sans-serif; background: #ffe6eb; margin: 0; padding: 20px; overflow-x: hidden; }
-  h1 { color: #d6336c; font-size: 24px; }
-  .gallery img { width: 150px; border-radius: 15px; margin: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-  button { padding: 15px 30px; font-size: 18px; border: none; border-radius: 10px; cursor: pointer; margin: 10px; transition: 0.3s; }
-  #yes { background: #ff4d6d; color: white; }
-  #no { background: gray; color: white; position: absolute; z-index: 999; }
-  .success-msg { color: #d6336c; animation: heartBeat 1.2s infinite; }
-  @keyframes heartBeat { 0% {transform: scale(1);} 50% {transform: scale(1.1);} 100% {transform: scale(1);} }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basmala, be my Valentine?</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6eb;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #container { position: relative; width: 100%; }
+        .main-media { width: 250px; border-radius: 15px; margin-bottom: 20px; } /* حجم أكبر للفيديوهات */
+        h1 { color: #d6336c; font-size: 24px; margin: 10px; }
+        .buttons { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; }
+        button {
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #yesBtn { background-color: #ff4d6d; color: white; z-index: 100; }
+        #noBtn { background-color: #888; color: white; }
+    </style>
 </head>
 <body>
 
-<h1>Basmala, would you be my Valentine? ❤️</h1>
+    <div id="container">
+        <video id="mainVideo" class="main-media" src="https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4" autoplay loop muted playsinline></video>
+        
+        <h1 id="question">Basmala, would you be my Valentine? ❤️</h1>
 
-<div class="gallery">
-  <https://ibb.co/7J6b83ZH>
+        <div class="buttons" id="buttonGroup">
+            <button id="yesBtn" onclick="celebrate()">Yes ❤️</button>
+            <button id="noBtn" onclick="handleNo()">No</button>
+        </div>
+    </div>
 
-<div style="height: 100px; position: relative;">
-  <button id="yes" onclick="yesAnswer()">Yes ❤️</button>
-  <button id="no" onmouseover="moveButton()" onclick="moveButton()">No</button>
-</div>
+    <script>
+        let noCount = 0;
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const questionText = document.getElementById("question");
+        const mainVideo = document.getElementById("mainVideo"); // الآن نتعامل مع عنصر الفيديو
 
-<script>
-function yesAnswer() {
-  document.body.innerHTML = `
-    <h1 class="success-msg">Best decision ever ❤️</h1>
-    <h2 style="color: #ff4d6d;">Can't wait for our memories together, Basmala!</h2>
-    <div style="font-size: 100px;">🌹</div>
-  `;
-}
+        const noMessages = [
+            "Are you sure?",
+            "Are you sure you're sure?",
+            "You better say yes!",
+            "Babee please...",
+            "Please babe 🥺",
+            "Don't do this to me...",
+            "I'm gonna cry 😭",
+            "Okay, last chance..."
+        ];
 
-function moveButton() {
-  const button = document.getElementById("no");
-  // حساب المساحة المتاحة في الشاشة للتليفون
-  const x = Math.random() * (window.innerWidth - button.offsetWidth);
-  const y = Math.random() * (window.innerHeight - button.offsetHeight);
-  button.style.left = x + "px";
-  button.style.top = y + "px";
-}
-</script>
+        function handleNo() {
+            // تغيير نص زر الـ No
+            if (noCount < noMessages.length) {
+                noBtn.innerText = noMessages[noCount];
+            } else {
+                noBtn.innerText = "You have no choice! 😂"; // بعد 8 ضغطات
+            }
+
+            // تكبير زر الـ Yes
+            let currentSize = 1 + (noCount * 0.4); // يزيد الحجم 40% في كل ضغطة
+            yesBtn.style.transform = `scale(${currentSize})`;
+            
+            noCount++;
+        }
+
+        function celebrate() {
+            // تغيير المحتوى بالكامل عند الموافقة
+            document.body.innerHTML = `
+                <div style="text-align:center;">
+                    <video src="https://assets.mixkit.co/videos/preview/mixkit-fireworks-illuminating-the-night-sky-4166-large.mp4" autoplay loop muted playsinline class="main-media" style="width:300px;"></video>
+                    <h1 style="color: #d6336c; font-size: 35px;">Best decision ever! ❤️</h1>
+                    <h2 style="color: #ff4d6d;">I love you, Basmala! ✨ 🎉</h2>
+                </div>
+            `;
+            
+            // إضافة تأثير القصاصات الملونة (اختياري)
+            confettiEffect();
+        }
+
+        function confettiEffect() {
+            // يمكنك إضافة مكتبة قصاصات هنا للحصول على تأثيرات أفضل
+            // في الوقت الحالي، سنغير لون الخلفية فقط
+            document.body.style.backgroundColor = "#fff0f3"; 
+        }
+    </script>
+
 </body>
 </html>
